@@ -1,10 +1,11 @@
-import React, { memo } from "react";
+import React from "react";
+import { buyCake } from "../redux";
 
 function CakeContainer() {
   return (
     <div>
-      <h2>number of cakes : </h2>
-      <button>buy cake</button>
+      <h2>number of cakes : {props.numberOfCakes}</h2>
+      <button onClick={props.buyCake}>buy cake</button>
     </div>
   );
 }
@@ -15,4 +16,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default memo(CakeContainer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    buyCake: () => dispatch(buyCake()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CakeContainer);
