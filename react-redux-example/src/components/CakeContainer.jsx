@@ -1,7 +1,9 @@
 import React from "react";
 import { buyCake } from "../redux";
+import { connect } from "react-redux";
 
-function CakeContainer() {
+
+function CakeContainer(props) {
   return (
     <div>
       <h2>number of cakes : {props.numberOfCakes}</h2>
