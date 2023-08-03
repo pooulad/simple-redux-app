@@ -2,6 +2,8 @@ const redux = require("redux");
 const createStore = redux.legacy_createStore;
 const applyMiddleware = redux.applyMiddleware;
 const thunkMiddleware = require("redux-thunk").default;
+const reduxLogger = require("redux-logger");
+const logger = reduxLogger.createLogger();
 const axios = require("axios");
 
 const initialState = {
@@ -71,6 +73,6 @@ const fetchUsers = () => {
     }
 }
 
-const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+const store = createStore(reducer, applyMiddleware(thunkMiddleware,logger));
 store.subscribe(() => { console.log("store updated!!!", store.getState()) });
 store.dispatch(fetchUsers());
