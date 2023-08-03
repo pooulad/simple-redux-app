@@ -1,7 +1,8 @@
 const redux = require("redux");
 const createStore = redux.legacy_createStore;
 const applyMiddleware = redux.applyMiddleware;
-const logger = reduxLogger.createLogger();
+const thunkMiddleware = require("redux-thunk").default;
+const axios = require("axios");
 
 
 const initialState = {
@@ -14,7 +15,7 @@ const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST"
 const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS"
 const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE"
 
-const fetchUsersRequests = () => {
+const fetchUsersRequest = () => {
     return {
         type: FETCH_USERS_REQUEST,
     }
@@ -57,4 +58,21 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-const store = createStore(reducer, applyMiddleware(logger));
+const fetchUsers = () => {
+    return function (dispatch) {
+        dispatch(fetchUsersRequest());
+        axios.get("https://jsonplaceholder.typicode.com/users")
+            .then((res) => {
+                const users = res.date.map(user => user.id);
+                dispatch(fetchUsersSuccess(users));
+            }).catch((err) => {
+                const errorMessage = err.message;
+                dispatch(fetchUsersFailure(errorMessage));
+            })
+    }
+}
+
+const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+const unsubscribe = store.subscribe(() => { console.log("store updated!!!", store.getState()) });
+store.dispatch(fetchUsers());
+unsubscribe();
