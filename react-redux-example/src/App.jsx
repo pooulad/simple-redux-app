@@ -1,14 +1,15 @@
-import { useState } from "react";
 import "./App.css";
 import CakeContainer from "./components/CakeContainer";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div className="App">
-      <CakeContainer />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <CakeContainer />
+      </div>
+    </Provider>
   );
 }
 
