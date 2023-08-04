@@ -18,3 +18,17 @@ export const fetchUsersFailure = error => {
         payload: error,
     }
 }
+
+export const fetchUsers = () => {
+    return (dispatch) => {
+        dispatch(fetchUsersRequest());
+        axios.get("https://jsonplaceholder.typicode.com/users")
+            .then((res) => {
+                const users = res.data.map((item) => item.id);
+                dispatch(fetchUsersSuccess(users));
+            }).catch((err) => {
+                const errorMessage = err.message;
+                dispatch(fetchUsersFailure(errorMessage));
+            })
+    }
+}
