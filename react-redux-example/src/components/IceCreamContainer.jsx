@@ -14,7 +14,7 @@ function IceCreamContainer(props) {
 
 const mapStateToProps = (state) => {
   return {
-    numberOfIceCreams: state.numberOfIceCreams,
+    numberOfIceCreams: state.iceCream.numberOfIceCreams,
   };
 };
 
