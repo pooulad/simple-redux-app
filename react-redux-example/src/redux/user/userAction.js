@@ -24,7 +24,7 @@ export const fetchUsers = () => {
         dispatch(fetchUsersRequest());
         axios.get("https://jsonplaceholder.typicode.com/users")
             .then((res) => {
-                const users = res.data.map((item) => item.id);
+                const users = res.data;
                 dispatch(fetchUsersSuccess(users));
             }).catch((err) => {
                 const errorMessage = err.message;
